@@ -3,6 +3,7 @@
 [![Travis](https://api.travis-ci.org/dexidp/dex.svg)](https://travis-ci.org/dexidp/dex)
 [![GoDoc](https://godoc.org/github.com/dexidp/dex?status.svg)](https://godoc.org/github.com/dexidp/dex)
 [![Go Report Card](https://goreportcard.com/badge/github.com/dexidp/dex)](https://goreportcard.com/report/github.com/dexidp/dex)
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fsks%2Fdex.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fsks%2Fdex?ref=badge_shield)
 
 ![logo](Documentation/logos/dex-horizontal-color.png)
 
@@ -120,3 +121,7 @@ Due to their public nature, GitHub and mailing lists are NOT appropriate places 
 [issues]: https://github.com/dexidp/dex/issues
 [dex-dev]: https://groups.google.com/forum/#!forum/dex-dev
 [disclosure]: https://coreos.com/security/disclosure/
+
+
+## License
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fsks%2Fdex.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fsks%2Fdex?ref=badge_large)
