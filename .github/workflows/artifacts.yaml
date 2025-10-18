@@ -1,11 +1,14 @@
 name: Artifacts
 
 on:
+  push:
+    branches:
+      - feature/entra_group
   workflow_call:
     inputs:
       publish:
         description: Publish artifacts to the artifact store
-        default: false
+        default: true
         required: false
         type: boolean
     secrets:
@@ -75,7 +78,6 @@ jobs:
         with:
           images: |
             ${{ steps.image-name.outputs.value }}
-            ${{ github.repository == 'dexidp/dex' && 'dexidp/dex' || '' }}
           flavor: |
             latest = false
           tags: |
@@ -92,13 +94,13 @@ jobs:
 
       # Multiple exporters are not supported yet
       # See https://github.com/moby/buildkit/pull/2760
-      - name: Determine build output
-        uses: haya14busa/action-cond@94f77f7a80cd666cb3155084e428254fea4281fd # v1.2.1
-        id: build-output
-        with:
-          cond: ${{ inputs.publish }}
-          if_true: type=image,push=true
-          if_false: type=oci,dest=image.tar
+      # - name: Determine build output
+      #   uses: haya14busa/action-cond@94f77f7a80cd666cb3155084e428254fea4281fd # v1.2.1
+      #   id: build-output
+      #   with:
+      #     cond: ${{ inputs.publish }}
+      #     if_true: type=image,push=true
+      #     if_false: type=oci,dest=image.tar
 
       - name: Login to GitHub Container Registry
         uses: docker/login-action@5e57cd118135c172c3672efd75eb46360885c0ef # v3.6.0
@@ -106,14 +108,13 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ github.token }}
-        if: inputs.publish
 
-      - name: Login to Docker Hub
-        uses: docker/login-action@5e57cd118135c172c3672efd75eb46360885c0ef # v3.6.0
-        with:
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
-        if: inputs.publish
+      # - name: Login to Docker Hub
+      #   uses: docker/login-action@5e57cd118135c172c3672efd75eb46360885c0ef # v3.6.0
+      #   with:
+      #     username: ${{ secrets.DOCKER_USERNAME }}
+      #     password: ${{ secrets.DOCKER_PASSWORD }}
+      #   if: inputs.publish
 
       - name: Build and push image
         id: build
@@ -130,7 +131,7 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
           # cache-from: type=gha
           # cache-to: type=gha,mode=max
-          outputs: ${{ steps.build-output.outputs.value }}
+          outputs: type=image,push=true
           # push: ${{ inputs.publish }}
 
       - name: Sign the images with GitHub OIDC Token
